@@ -1,0 +1,8 @@
+.vscode
+bin
+obj
+
+*.lnk
+*.sln
+*.vcxproj
+*.vcxproj.filters
