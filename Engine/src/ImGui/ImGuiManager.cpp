@@ -109,19 +109,33 @@ namespace Engine
 	{
 		if (isEnabled)
 		{
+			//creates main viewport
 			ImGui::SetNextWindowPos(ImVec2(0, 0));
 			ImGui::SetNextWindowSize(ImGui::GetIO().DisplaySize);
 			ImGui::SetNextWindowBgAlpha(0.0f);
 
-			ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
-											ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-											ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+			ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+			window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+			window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
 			ImGui::Begin("MainDockSpace", nullptr, window_flags);
+			dockspaceID = ImGui::GetID("MainDockSpace");
+
+			ImGui::DockBuilderRemoveNode(dockspaceID);
+			ImGui::DockBuilderAddNode(dockspaceID, ImGuiDockNodeFlags_DockSpace);
+
+			ImGui::DockBuilderSetNodeSize(dockspaceID, ImGui::GetIO().DisplaySize);	
+
+			dockSides.dock_main = dockspaceID;
+			dockSides.dock_left = ImGui::DockBuilderSplitNode(dockSides.dock_main, ImGuiDir_Left, 0.2f, nullptr, &dockSides.dock_main);
+			dockSides.dock_right = ImGui::DockBuilderSplitNode(dockSides.dock_main, ImGuiDir_Right, 0.15f, nullptr, &dockSides.dock_main);
+			dockSides.dock_down = ImGui::DockBuilderSplitNode(dockSides.dock_main, ImGuiDir_Down, 0.15f, nullptr, &dockSides.dock_main);
+			dockSides.dock_left_top = ImGui::DockBuilderSplitNode(dockSides.dock_left, ImGuiDir_Up, 0.5f, nullptr, &dockSides.dock_left);
+			dockSides.dock_left_bottom = dockSides.dock_left;
 		}
 	}
 
@@ -129,11 +143,13 @@ namespace Engine
 	{
 		if (isEnabled)
 		{
-			ImGuiID dockspaceID = ImGui::GetID("MainDockSpace");
-			ImGui::DockSpace(dockspaceID);
-			ImGui::End();
-
+			ImGui::DockBuilderFinish(dockspaceID);
 			ImGui::PopStyleVar(3);
+
+			//setting dockspace
+			ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+			ImGui::End();
 		}
 	}
 

@@ -29,8 +29,7 @@ namespace Game
 
 	void FNAFRPG::OnImGuiRender()
 	{
-		ImGui::ShowDemoWindow();
-		UPDATE_ALL_IM_WINDOW();
+		
 	}
 
 	void FNAFRPG::OnMenuBarRender()
@@ -53,7 +52,7 @@ namespace Game
 
 	void FNAFRPG::OnDockspaceUpdate()
 	{
-		UPDATE_ALL_IM_WINDOW_DOCKSPACE(Engine::ImGuiManager::Get());
+		
 	}
 }
 

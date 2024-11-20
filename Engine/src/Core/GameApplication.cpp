@@ -7,12 +7,11 @@ namespace Engine
 	{
 		isRunning = true;
 		restartImGui = false;
-		clearColor = ImVec4(0.40f, 0.55f, 0.60f, 1.00f);
 
 		REGISTER_EVENT_LISTENER(this);
 
 		CreateWindowMaximized();
-		glContext.Init(*window.Get());
+		GLContext::Init(*window.Get());
 		ActivateImGui();
 	}
 
@@ -21,10 +20,9 @@ namespace Engine
 
 	}
 
-	//IMGUI
 	void GameApplication::ActivateImGui()
 	{
-		imguiManager.Init(window.Get(), &glContext.GetContext());
+		imguiManager.Init(window.Get(), &GLContext::GetContext());
 	}
 
 	void GameApplication::DisableImGui()
@@ -52,30 +50,29 @@ namespace Engine
 		{
 			imguiManager.CreateNewFrame();
 
-			//IMGUI DOCKSPACE
 			imguiManager.BeginDockspace();
 			if (imguiManager.IsEnabled())
 			{
+				UPDATE_ALL_IM_WINDOW_DOCKSPACE(imguiManager);
 				OnDockspaceUpdate();
 				OnMenuBarRender();
 			}
 			imguiManager.EndDockspace();
 
-			//render client-application imgui
 			if (imguiManager.IsEnabled())
 			{
 				OnImGuiRender();
+				UPDATE_ALL_IM_WINDOW();
 			}
 
-			//Resart ImGui
 			if (restartImGui)
 			{
 				imguiManager.Restart();
 				restartImGui = false;
 			}
 
-			glContext.Clear(clearColor);
-			OnUpdate(); //updates client-application
+			GLContext::Clear();
+			OnUpdate();
 			imguiManager.Render();
 			window.Update();
 		}

@@ -1,3 +1,4 @@
+#include "Core/Core.h"
 #include "Core/GameApplication.h"
 
 #ifdef _WIN32

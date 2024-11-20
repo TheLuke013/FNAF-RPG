@@ -6,6 +6,7 @@
 #include "Core/Window.h"
 #include "Core/GLContext.h"
 #include "ImGui/ImGuiManager.h"
+#include "ImGui/ImWindowManager.h"
 
 namespace Engine
 {
@@ -36,9 +37,7 @@ namespace Engine
 		bool isRunning;
 		bool restartImGui;
 		Window window;
-		GLContext glContext;
 		ImGuiManager& imguiManager;
-		ImVec4 clearColor;
 
 		void _OnEvent(Event e) override;
 	};

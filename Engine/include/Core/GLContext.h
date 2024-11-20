@@ -11,13 +11,15 @@ namespace Engine
     class GLContext
     {
     public:
-        void Init(SDL_Window& window);
-        void Clear(ImVec4 clearColor);
+        static void Init(SDL_Window& window);
+        static void Clear();
 
-        SDL_GLContext& GetContext() {   return glContext;   }
+        static SDL_GLContext& GetContext() {   return glContext;   }
+        static ImVec4& GetClearColor() {   return clearColor;   }
 
     private:
-        SDL_GLContext glContext;
+        static SDL_GLContext glContext;
+        static ImVec4 clearColor;
     };
 }
 
