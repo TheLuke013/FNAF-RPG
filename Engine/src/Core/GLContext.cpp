@@ -7,7 +7,7 @@ namespace Engine
 
     void GLContext::Init(SDL_Window& window)
     {
-        clearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+        clearColor = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
         SDL_GLContext gl_context = SDL_GL_CreateContext(&window);
         SDL_GL_MakeCurrent(&window, gl_context);
         SDL_GL_SetSwapInterval(1); // Enable vsync

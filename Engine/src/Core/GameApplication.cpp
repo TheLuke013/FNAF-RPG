@@ -44,6 +44,10 @@ namespace Engine
 
 	void GameApplication::Run()
 	{
+		//load imgui font
+		std::shared_ptr<Font> imguiFont = std::make_shared<Font>("Roboto Regular", "../assets/fonts/Roboto-Regular.ttf", 16.f);
+		imguiManager.LoadFont(imguiFont.get());
+
 		OnReady();
 
 		while (isRunning)

@@ -9,10 +9,6 @@ namespace Engine
 		properties.size = size;
 	}
 
-	void Font::Load()
-	{
-	}
-
 	void Font::SetSize(float size)
 	{
 		properties.size = size;
